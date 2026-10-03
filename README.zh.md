@@ -1,10 +1,42 @@
 # DeepSeek Harness 超级记忆
 
+[← 桌面端与安装包](https://github.com/Missher12/Missher-DeepseekHarness-Desktop) · [全部插件](https://github.com/Missher12/Missher-DeepseekHarness-Desktop/blob/main/plugins/README.zh.md) · [通用安装指南](https://github.com/Missher12/Missher-DeepseekHarness-Desktop/blob/main/docs/cookbook/install-cordis-plugins.zh.md)
+
+## 新手上手：项目记忆
+
+按项目保存、审核和检索长期记忆，恢复项目决定、进度、经验与下一步。
+
+| 你需要知道的事 | 说明 |
+| --- | --- |
+| 插件包名 | `dsh-missher-memory` |
+| 当前源码版本 | `0.3.1` |
+| 装好后在哪里使用 | 设置 → 项目记忆；Agent 的 memory_search 工具 |
+| 下载 / 源码 | [下载 0.3.1 安装包](https://github.com/Missher12/Missher-DSH-Memory/releases/tag/v0.3.1) |
+
+### 安装、启用与第一次使用
+
+1. 先从[桌面端主页](https://github.com/Missher12/Missher-DeepseekHarness-Desktop)下载适合电脑的应用，完成模型配置。这个仓库是可选插件，不是独立桌面应用。
+2. 阅读[通用安装指南](https://github.com/Missher12/Missher-DeepseekHarness-Desktop/blob/main/docs/cookbook/install-cordis-plugins.zh.md)及本页原有安装说明，核对宿主与插件版本。桌面版使用“插件 → 添加插件”；Web/CLI 使用自己的目标配置组，不混用两种安装位置。
+3. 安装后按宿主提示启用并重新加载，进入上表列出的入口。更新已有插件前保留配置和数据，不同时启用旧包名与新包名。
+4. 先绑定一个项目并检查来源，再用 memory_search 查询。待审核候选不会自动当成已审核记忆。
+
+### 使用前了解这些边界
+
+这是独立记忆项目，当前说明中的验证基线是 Harness 0.1.5-rc.2 / Cordis 4.0.2；不能据此承诺当前桌面全部兼容。
+
+如果页面或功能没出现，先检查当前应用版本、插件是否启用以及加载错误。反馈时附版本、复现步骤和已脱敏错误；不要上传 API Key、真实会话、账号 Cookie 或学习数据库。Git 中的代码更新不会自动替换电脑上已安装的插件。
+
+### 继续阅读
+
+下文保留本插件的详细行为、配置、开发和验证说明。跨平台是否实际通过，以对应版本的验证记录为准；桌面安装包能启动，不代表全部插件和外部服务都已验收。
+
+---
+
 [English](README.md) | 中文
 
 `0.3.1` 面向官方 Harness `0.1.5-rc.2` / Cordis `4.0.2`，提供按项目隔离、先审核后检索的长期记忆。安装使用固定版本包；[安装与验收指南](INSTALL.md) 包含商店入口、一条命令和 Agent 安装提示。
 
-[![跨平台 Harness 验证](https://github.com/Missher12/dsh-missher-memory/actions/workflows/cross-platform.yml/badge.svg)](https://github.com/Missher12/dsh-missher-memory/actions/workflows/cross-platform.yml)
+[![跨平台 Harness 验证](https://github.com/Missher12/Missher-DSH-Memory/actions/workflows/cross-platform.yml/badge.svg)](https://github.com/Missher12/Missher-DSH-Memory/actions/workflows/cross-platform.yml)
 
 `dsh-missher-memory` 是可独立安装的 DeepSeek Harness bundle，用于恢复超级长项目的架构、决定、进度、失败经验和下一步。当前包包含索引召回和可逆重复记忆整理；它不修改 Harness 核心，也不复制或改写现有旧记忆数据库。
 
@@ -17,16 +49,16 @@
 在 DSH Market 搜索 `dsh-missher-memory`，核对仓库为 `Missher12/dsh-missher-memory`，查看条目的版本后安装。商店条目由独立目录维护；若仍显示 `0.3.0-cordis.0`，请使用下方固定 `0.3.1` 命令。
 
 ```sh
-dsh plugin --profile web add https://github.com/Missher12/dsh-missher-memory/releases/download/v0.3.1/dsh-missher-memory-0.3.1.tgz
+dsh plugin --profile web add https://github.com/Missher12/Missher-DSH-Memory/releases/download/v0.3.1/dsh-missher-memory-0.3.1.tgz
 ```
 
-[下载 0.3.1 安装包](https://github.com/Missher12/dsh-missher-memory/releases/download/v0.3.1/dsh-missher-memory-0.3.1.tgz)（176873 bytes，SHA-256：`5bde1f688d6791954d890e2b958775abbdaffe06532464c6b23de362cb06ed49`）。离线安装时把命令中的 URL 换成下载文件的路径。
+[下载 0.3.1 安装包](https://github.com/Missher12/Missher-DSH-Memory/releases/download/v0.3.1/dsh-missher-memory-0.3.1.tgz)（176873 bytes，SHA-256：`5bde1f688d6791954d890e2b958775abbdaffe06532464c6b23de362cb06ed49`）。离线安装时把命令中的 URL 换成下载文件的路径。
 
 安装后运行 `dsh --profile web --dump-config`，核对 `dsh-missher-memory` 和 `missher-memory` 均存在；随后重启同一 `web` profile 的 Harness。配置存在仅证明安装组合成功，继续在“设置 → 项目记忆”绑定，并实际调用 `memory_search`。
 
 给 Agent 的一句话：
 
-> 请按 https://github.com/Missher12/dsh-missher-memory/blob/main/INSTALL.md 核对宿主版本，在当前 web profile 安装固定 0.3.1 包，协助我在设置的项目记忆页确认绑定，并实际调用 memory_search 验证；保留现有数据。
+> 请按 https://github.com/Missher12/Missher-DSH-Memory/blob/main/INSTALL.md 核对宿主版本，在当前 web profile 安装固定 0.3.1 包，协助我在设置的项目记忆页确认绑定，并实际调用 memory_search 验证；保留现有数据。
 
 新安装无需 `vectors.db`；绑定后使用 `$DSH_HOME/missher-memory/state.db`。如需关联已有旧记忆，详见[安装指南](INSTALL.md)，旧来源始终只读。
 
@@ -108,6 +140,6 @@ node scripts/native-smoke.mjs --archive dist/dsh-missher-memory-0.3.1.tgz
 
 ## 2026-09-06 维护候选包
 
-`0.3.0-cordis.0` 为预发布版本。预构建安装包和对应验证结果见 [Release 说明](https://github.com/Missher12/dsh-missher-memory/releases/tag/v0.3.0-cordis.0)；商店是否可搜索还取决于收录条目是否被合并。本次 Cordis 升级已解除必需 Brain 依赖；安装成功仍不代表当前 Agent 已发现并能调用工具。CLI 安装/卸载与真实运行时激活是不同证据。包 smoke 输出 `runtimeMode: cordis-with-synthetic-host-services` 和 `realHostActivationVerified: false`，并使用临时合成数据验证重装恢复，不代表真实 Desktop Brain 或界面验收。
+`0.3.0-cordis.0` 为预发布版本。预构建安装包和对应验证结果见 [Release 说明](https://github.com/Missher12/Missher-DSH-Memory/releases/tag/v0.3.0-cordis.0)；商店是否可搜索还取决于收录条目是否被合并。本次 Cordis 升级已解除必需 Brain 依赖；安装成功仍不代表当前 Agent 已发现并能调用工具。CLI 安装/卸载与真实运行时激活是不同证据。包 smoke 输出 `runtimeMode: cordis-with-synthetic-host-services` 和 `realHostActivationVerified: false`，并使用临时合成数据验证重装恢复，不代表真实 Desktop Brain 或界面验收。
 
 已审核记忆仍是历史数据，不能提供新授权。遗忘清除派生原子和胶囊，但保留 forgotten 候选作为审核历史。项目 JSON 导出暂不包含胶囊和 archived 原子，不是完整备份。

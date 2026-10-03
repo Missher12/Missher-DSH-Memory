@@ -1,10 +1,42 @@
 # Cordis Memory with DeepSeek Harness Integration
 
+[← 桌面端与安装包](https://github.com/Missher12/Missher-DeepseekHarness-Desktop) · [全部插件](https://github.com/Missher12/Missher-DeepseekHarness-Desktop/blob/main/plugins/README.zh.md) · [通用安装指南](https://github.com/Missher12/Missher-DeepseekHarness-Desktop/blob/main/docs/cookbook/install-cordis-plugins.zh.md)
+
+## 新手上手：项目记忆
+
+按项目保存、审核和检索长期记忆，恢复项目决定、进度、经验与下一步。
+
+| 你需要知道的事 | 说明 |
+| --- | --- |
+| 插件包名 | `dsh-missher-memory` |
+| 当前源码版本 | `0.3.1` |
+| 装好后在哪里使用 | 设置 → 项目记忆；Agent 的 memory_search 工具 |
+| 下载 / 源码 | [下载 0.3.1 安装包](https://github.com/Missher12/Missher-DSH-Memory/releases/tag/v0.3.1) |
+
+### 安装、启用与第一次使用
+
+1. 先从[桌面端主页](https://github.com/Missher12/Missher-DeepseekHarness-Desktop)下载适合电脑的应用，完成模型配置。这个仓库是可选插件，不是独立桌面应用。
+2. 阅读[通用安装指南](https://github.com/Missher12/Missher-DeepseekHarness-Desktop/blob/main/docs/cookbook/install-cordis-plugins.zh.md)及本页原有安装说明，核对宿主与插件版本。桌面版使用“插件 → 添加插件”；Web/CLI 使用自己的目标配置组，不混用两种安装位置。
+3. 安装后按宿主提示启用并重新加载，进入上表列出的入口。更新已有插件前保留配置和数据，不同时启用旧包名与新包名。
+4. 先绑定一个项目并检查来源，再用 memory_search 查询。待审核候选不会自动当成已审核记忆。
+
+### 使用前了解这些边界
+
+这是独立记忆项目，当前说明中的验证基线是 Harness 0.1.5-rc.2 / Cordis 4.0.2；不能据此承诺当前桌面全部兼容。
+
+如果页面或功能没出现，先检查当前应用版本、插件是否启用以及加载错误。反馈时附版本、复现步骤和已脱敏错误；不要上传 API Key、真实会话、账号 Cookie 或学习数据库。Git 中的代码更新不会自动替换电脑上已安装的插件。
+
+### 继续阅读
+
+下文保留本插件的详细行为、配置、开发和验证说明。跨平台是否实际通过，以对应版本的验证记录为准；桌面安装包能启动，不代表全部插件和外部服务都已验收。
+
+---
+
 English | [中文](README.zh.md)
 
 `0.3.1` targets official Harness `0.1.5-rc.2` / Cordis `4.0.2` and provides project-scoped memory reviewed before search. Install the fixed-version package; the [installation and acceptance guide](INSTALL.md) covers DSH Market, the one-line command, and an Agent setup prompt.
 
-[![Cross-platform Harness verification](https://github.com/Missher12/dsh-missher-memory/actions/workflows/cross-platform.yml/badge.svg)](https://github.com/Missher12/dsh-missher-memory/actions/workflows/cross-platform.yml)
+[![Cross-platform Harness verification](https://github.com/Missher12/Missher-DSH-Memory/actions/workflows/cross-platform.yml/badge.svg)](https://github.com/Missher12/Missher-DSH-Memory/actions/workflows/cross-platform.yml)
 
 `dsh-missher-memory` is an independently installable DeepSeek Harness bundle for recovering architecture, decisions, progress, failed approaches, and next steps in long-running projects. The current package includes indexed recall and reversible duplicate consolidation. It neither changes Harness core nor copies or modifies an existing legacy database.
 
@@ -17,16 +49,16 @@ Prerequisites: official DeepSeek Harness `0.1.5-rc.2`, `dsh` on PATH, and Node `
 In DSH Market, search for `dsh-missher-memory`, confirm the repository is `Missher12/dsh-missher-memory`, and inspect the listed version before installing. The market uses a separately maintained catalog; if it still lists `0.3.0-cordis.0`, use the fixed `0.3.1` command below.
 
 ```sh
-dsh plugin --profile web add https://github.com/Missher12/dsh-missher-memory/releases/download/v0.3.1/dsh-missher-memory-0.3.1.tgz
+dsh plugin --profile web add https://github.com/Missher12/Missher-DSH-Memory/releases/download/v0.3.1/dsh-missher-memory-0.3.1.tgz
 ```
 
-[Download the 0.3.1 package](https://github.com/Missher12/dsh-missher-memory/releases/download/v0.3.1/dsh-missher-memory-0.3.1.tgz) (176873 bytes; SHA-256: `5bde1f688d6791954d890e2b958775abbdaffe06532464c6b23de362cb06ed49`). For offline installation, replace the URL with the downloaded file path.
+[Download the 0.3.1 package](https://github.com/Missher12/Missher-DSH-Memory/releases/download/v0.3.1/dsh-missher-memory-0.3.1.tgz) (176873 bytes; SHA-256: `5bde1f688d6791954d890e2b958775abbdaffe06532464c6b23de362cb06ed49`). For offline installation, replace the URL with the downloaded file path.
 
 After installing, run `dsh --profile web --dump-config` and confirm both `dsh-missher-memory` and `missher-memory`. Restart Harness using the same `web` profile. Configuration proves composition only; continue with Settings → Project Memory, explicit binding, and a real `memory_search` tool call.
 
 One sentence for your Agent:
 
-> Follow https://github.com/Missher12/dsh-missher-memory/blob/main/INSTALL.md to check host compatibility, install the fixed 0.3.1 package in the current web profile, help me confirm the project binding in Settings → Project Memory, and call memory_search to verify activation while preserving existing data.
+> Follow https://github.com/Missher12/Missher-DSH-Memory/blob/main/INSTALL.md to check host compatibility, install the fixed 0.3.1 package in the current web profile, help me confirm the project binding in Settings → Project Memory, and call memory_search to verify activation while preserving existing data.
 
 A new installation needs no `vectors.db`; binding initializes `$DSH_HOME/missher-memory/state.db`. For an existing read-only legacy source, follow the [installation guide](INSTALL.md).
 
@@ -108,7 +140,7 @@ node scripts/native-smoke.mjs --archive dist/dsh-missher-memory-0.3.1.tgz
 
 ## Previous Cordis prerelease
 
-`0.3.0-cordis.0` is a prerelease. Download the prebuilt package and check version-specific verification in [the release notes](https://github.com/Missher12/dsh-missher-memory/releases/tag/v0.3.0-cordis.0). Store inclusion is separate and depends on the curated registry accepting the entry.
+`0.3.0-cordis.0` is a prerelease. Download the prebuilt package and check version-specific verification in [the release notes](https://github.com/Missher12/Missher-DSH-Memory/releases/tag/v0.3.0-cordis.0). Store inclusion is separate and depends on the curated registry accepting the entry.
 
 The Cordis upgrade removes the mandatory Brain dependency. The earlier 117-test maintenance evidence below predates this upgrade; see CORDIS.md and the current delivery report for fresh verification. CLI install/remove evidence is separate from runtime activation. The packaged smoke reports `runtimeMode: cordis-with-synthetic-host-services` and `realHostActivationVerified: false`, and checks reinstall restoration using temporary synthetic data. No real Desktop Brain or UI acceptance is claimed by this smoke.
 
